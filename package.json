@@ -1,0 +1,21 @@
+{
+  "name": "typescript-runtime-validator",
+  "version": "0.0.1",
+  "description": "validates typescript at runtime",
+  "main": "dist/src/index.js",
+  "repository": "git@github.com:EvaLok/typescript-runtime-validator.git",
+  "author": "Eva Beekers <eva.aedea@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "typescript": "^4.4.4",
+    "typescript-json-schema": "^0.51.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3",
+    "ts-node": "^10.4.0"
+  }
+}
