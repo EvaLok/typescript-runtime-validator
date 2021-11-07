@@ -6,6 +6,7 @@ export class SchemaGenerator {
         fullTypeName: string,
         absoluteFilePaths: Array<string>,
         compilerOptions: TJS.CompilerOptions,
+        settings: TJS.PartialArgs,
         basePath ?: string
     ) {
         const program = TJS.getProgramFromFiles(
@@ -14,7 +15,7 @@ export class SchemaGenerator {
             basePath
         );
 
-        const schema = TJS.generateSchema(program, fullTypeName);
+        const schema = TJS.generateSchema(program, fullTypeName, settings);
 
         if ( ! schema ) {
             throw new SchemaGenerationError(

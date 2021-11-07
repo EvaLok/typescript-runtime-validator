@@ -17,6 +17,9 @@ export class Validator {
             params.compilerOptions || {
                 strictNullChecks: true,
             },
+            params.tjsSettings || {
+                required: true,
+            },
             params.basePath
         );
 
@@ -46,5 +49,6 @@ export interface IValidatorParams {
 
 
     compilerOptions ?: TJS.CompilerOptions,
+    tjsSettings ?: TJS.PartialArgs,
     basePath ?: string,
 }
