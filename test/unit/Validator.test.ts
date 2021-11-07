@@ -2,10 +2,11 @@ import { assert as Assert } from "chai";
 import { describe } from "mocha";
 import { Validator } from "../../src/Validator";
 import { resolve } from "path";
+import { ISimpleInterface } from "./samples/simple";
 
 describe(`Validator`, () => {
     describe(`simple interface tests`, () => {
-        let sut !: Validator;
+        let sut !: Validator<ISimpleInterface>;
 
         before(() => {
             sut = new Validator({
@@ -63,7 +64,30 @@ describe(`Validator`, () => {
             finally {
                 Assert.isDefined(caught);
             }
+        });
 
+        it(`should should fail if type is incorrect`, () => {
+            let caught: any;
+
+            try {
+                sut.validate({
+                    stringProp: "asdf",
+                    numberProp: 1.22,
+                    arrayProp: [
+                        "apple",
+                        "tree",
+                        123
+                    ],
+                });
+            }
+
+            catch (err: any) {
+                caught = err;
+            }
+
+            finally {
+                Assert.isDefined(caught);
+            }
         });
     });
 });

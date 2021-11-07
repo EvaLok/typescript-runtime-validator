@@ -3,7 +3,7 @@ import * as TJS from "typescript-json-schema";
 import { SchemaValidationError } from "./errors/SchemaValidationError";
 import { SchemaGenerator } from "./SchemaGenerator";
 
-export class Validator {
+export class Validator<T> {
     private schema: any;
     private validateFunction: ValidateFunction;
     private fullTypeName: string;
@@ -26,7 +26,7 @@ export class Validator {
         this.validateFunction = this.generateValidateFunction();
     }
 
-    public validate( data: any ) {
+    public validate( data: any ): T {
         const valid = this.validateFunction(data);
 
         if ( ! valid ) {
@@ -34,6 +34,8 @@ export class Validator {
                 `data does not validate based on [${this.fullTypeName}]`
             );
         }
+
+        return data as T;
     }
 
     private generateValidateFunction(): ValidateFunction {
