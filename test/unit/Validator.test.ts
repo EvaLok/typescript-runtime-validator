@@ -2,6 +2,7 @@ import { assert as Assert } from "chai";
 import { describe } from "mocha";
 import { Validator } from "../../src";
 import { resolve } from "path";
+import { IExample1 } from "./samples/dir1";
 import { ISimpleInterface } from "./samples/simple";
 
 describe(`Validator`, () => {
@@ -99,6 +100,67 @@ describe(`Validator`, () => {
     });
 
     describe(`example1 (using simple as a property) tests`, () => {
+        let sut !: Validator<IExample1>;
 
-    })
+        before(() => {
+            sut = new Validator({
+                fullTypeName: "IExample1",
+                basePath: resolve("./samples"),
+                absoluteFilePaths: [
+                    resolve(__dirname + "/samples/dir1/index.ts")
+                ]
+            });
+        });
+
+        it(`should validate`, () => {
+            const data = sut.validate({
+                simple: {
+                    stringProp: "asdf",
+                    numberProp: 1.22,
+                    arrayProp: [
+                        "apple",
+                        "tree"
+                    ],
+                    optionalProp: {
+                        fruit: "tomato",
+                        vegetable: "carrot"
+                    }
+                }
+            });
+
+            Assert.equal(data.simple.numberProp, 1.22);
+        });
+
+        it(`should fail if optional data is incorrect type`, () => {
+            let caught: any;
+
+            try {
+                const data = sut.validate({
+                    simple: {
+                        stringProp: "asdf",
+                        numberProp: 1.22,
+                        arrayProp: [
+                            "apple",
+                            "tree"
+                        ],
+                        optionalProp: {
+                            fruit: "not-a-fruit", // incorrect type
+                            vegetable: "carrot"
+                        }
+                    }
+                });
+            }
+
+            catch (err: any) {
+                caught = err;
+            }
+
+            finally {
+                Assert.isDefined(caught);
+                Assert.equal(caught.ajvErrors[0].message,
+                    `must be equal to one of the allowed values`
+                );
+            }
+        });
+    });
 });
