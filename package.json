@@ -6,7 +6,7 @@
   "repository": "git@github.com:EvaLok/typescript-runtime-validator.git",
   "author": "Eva Beekers <eva.aedea@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "files": [
     "dist"
   ],
