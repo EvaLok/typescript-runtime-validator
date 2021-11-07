@@ -3,7 +3,9 @@ import { describe } from "mocha";
 import { resolve } from "path";
 import * as TJS from "typescript-json-schema";
 
-describe(`typescript-json-schema`, () => {
+describe(`typescript-json-schema`, function() {
+    this.timeout(30000);
+
     const compilerOptions: TJS.CompilerOptions = {
         strictNullChecks: true,
     };

@@ -6,7 +6,9 @@ import { IExample1 } from "./samples/dir1";
 import { IExample2 } from "./samples/dir2";
 import { ISimpleInterface } from "./samples/simple";
 
-describe(`Validator`, () => {
+describe(`Validator`, function() {
+    this.timeout(30000);
+
     describe(`simple interface tests`, () => {
         let sut !: Validator<ISimpleInterface>;
 
