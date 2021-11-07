@@ -1,6 +1,6 @@
 import { ErrorObject } from "ajv";
 
-export class SchemaValidationError extends Error {
+export class ValidationError extends Error {
     constructor(
         message: string,
         public ajvErrors: Array<ErrorObject>

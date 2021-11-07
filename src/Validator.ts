@@ -1,6 +1,6 @@
 import Ajv, { ValidateFunction } from "ajv";
 import * as TJS from "typescript-json-schema";
-import { SchemaValidationError } from "./errors/SchemaValidationError";
+import { ValidationError } from "./errors/ValidationError";
 import { SchemaGenerator } from "./SchemaGenerator";
 
 export class Validator<T> {
@@ -32,7 +32,7 @@ export class Validator<T> {
         const valid = this.validateFunction(data);
 
         if ( ! valid ) {
-            throw new SchemaValidationError(
+            throw new ValidationError(
                 `data does not validate based on [${this.fullTypeName}]`,
                 this.validateFunction.errors || []
             );

@@ -1,6 +1,6 @@
 import { assert as Assert } from "chai";
 import { describe } from "mocha";
-import { Validator } from "../../src/Validator";
+import { Validator } from "../../src";
 import { resolve } from "path";
 import { ISimpleInterface } from "./samples/simple";
 
@@ -97,4 +97,8 @@ describe(`Validator`, () => {
             }
         });
     });
+
+    describe(`example1 (using simple as a property) tests`, () => {
+
+    })
 });
