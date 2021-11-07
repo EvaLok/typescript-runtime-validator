@@ -3,6 +3,7 @@ import { describe } from "mocha";
 import { Validator } from "../../src";
 import { resolve } from "path";
 import { IExample1 } from "./samples/dir1";
+import { IExample2 } from "./samples/dir2";
 import { ISimpleInterface } from "./samples/simple";
 
 describe(`Validator`, () => {
@@ -112,7 +113,7 @@ describe(`Validator`, () => {
             });
         });
 
-        it(`should validate`, () => {
+        it(`should validate correct data`, () => {
             const data = sut.validate({
                 simple: {
                     stringProp: "asdf",
@@ -148,6 +149,117 @@ describe(`Validator`, () => {
                             vegetable: "carrot"
                         }
                     }
+                });
+            }
+
+            catch (err: any) {
+                caught = err;
+            }
+
+            finally {
+                Assert.isDefined(caught);
+                Assert.equal(caught.ajvErrors[0].message,
+                    `must be equal to one of the allowed values`
+                );
+            }
+        });
+    });
+
+    describe(`example2 (using union / intersect) tests`, () => {
+        let sut !: Validator<IExample2>;
+
+        before(() => {
+            sut = new Validator({
+                fullTypeName: "IExample2",
+                basePath: resolve("./samples"),
+                absoluteFilePaths: [
+                    resolve(__dirname + "/samples/dir2/index.ts")
+                ]
+            });
+        });
+
+        it(`should validate correct data`, () => {
+            const data = sut.validate({
+                example1OrSimple: [{
+                    stringProp: "asdf",
+                    numberProp: 1.22,
+                    arrayProp: [
+                        "apple",
+                        "tree"
+                    ],
+                    optionalProp: {
+                        fruit: "tomato",
+                        vegetable: "carrot"
+                    }
+                }],
+                example1AndSimple: [{
+                    stringProp: "asdf",
+                    numberProp: 1.22,
+                    arrayProp: [
+                        "apple",
+                        "tree"
+                    ],
+                    optionalProp: {
+                        fruit: "tomato",
+                        vegetable: "carrot"
+                    },
+                    simple: {
+                        stringProp: "asdf",
+                        numberProp: 1.22,
+                        arrayProp: [
+                            "apple",
+                            "tree"
+                        ],
+                        optionalProp: {
+                            fruit: "tomato",
+                            vegetable: "carrot"
+                        }
+                    }
+                }]
+            });
+        });
+
+        it(`should fail if data is incorrect form`, () => {
+            let caught: any;
+
+            try {
+                const data = sut.validate({
+                    example1OrSimple: [{
+                        stringProp: "asdf",
+                        numberProp: 1.22,
+                        arrayProp: [
+                            "apple",
+                            "tree"
+                        ],
+                        optionalProp: {
+                            fruit: "tomato",
+                            vegetable: "carrot"
+                        }
+                    }],
+                    example1AndSimple: [{
+                        stringProp: "asdf",
+                        numberProp: 1.22,
+                        arrayProp: [
+                            "apple",
+                            "tree"
+                        ],
+                        optionalProp: {
+                            fruit: "tomato",
+                            vegetable: "carrot"
+                        },
+                        simple: {
+                            stringProp: "asdf",
+                            numberProp: 1.22,
+                            arrayProp: [
+                                "apple",
+                                "tree"
+                            ],
+                            optionalProp: {
+                                fruit: "tomato",
+                                vegetable: "not-a-veg" // incorrect type
+                            }
+                        }
+                    }]
                 });
             }
 
