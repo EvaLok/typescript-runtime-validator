@@ -5,6 +5,14 @@
   "main": "dist/src/index.js",
   "repository": "git@github.com:EvaLok/typescript-runtime-validator.git",
   "author": "Eva Beekers <eva.aedea@gmail.com>",
+  "keywords": [
+    "typescript",
+    "runtime",
+    "validation",
+    "schema",
+    "node-config",
+    "config"
+  ],
   "license": "MIT",
   "private": false,
   "files": [
