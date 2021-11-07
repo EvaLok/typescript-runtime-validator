@@ -45,11 +45,12 @@ describe(`Validator`, () => {
         });
 
         it(`should should fail if required is missing`, () => {
-            let caught: any;
+            let caught !: any;
 
             try {
                 sut.validate({
                     stringProp: "asdf",
+                    // missing numberProp
                     arrayProp: [
                         "apple",
                         "tree"
@@ -63,6 +64,9 @@ describe(`Validator`, () => {
 
             finally {
                 Assert.isDefined(caught);
+                Assert.equal(caught.ajvErrors[0].message,
+                    `must have required property 'numberProp'`
+                );
             }
         });
 
@@ -76,7 +80,7 @@ describe(`Validator`, () => {
                     arrayProp: [
                         "apple",
                         "tree",
-                        123
+                        123 // not a string
                     ],
                 });
             }
@@ -87,6 +91,9 @@ describe(`Validator`, () => {
 
             finally {
                 Assert.isDefined(caught);
+                Assert.equal(caught.ajvErrors[0].message,
+                    `must be string`
+                );
             }
         });
     });

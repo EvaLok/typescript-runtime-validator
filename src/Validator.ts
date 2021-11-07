@@ -7,9 +7,11 @@ export class Validator<T> {
     private schema: any;
     private validateFunction: ValidateFunction;
     private fullTypeName: string;
+    private ajv: Ajv;
 
     constructor( params: IValidatorParams ) {
         this.fullTypeName = params.fullTypeName;
+        this.ajv = new Ajv();
 
         this.schema = SchemaGenerator.GenerateSchema(
             params.fullTypeName,
@@ -31,7 +33,8 @@ export class Validator<T> {
 
         if ( ! valid ) {
             throw new SchemaValidationError(
-                `data does not validate based on [${this.fullTypeName}]`
+                `data does not validate based on [${this.fullTypeName}]`,
+                this.validateFunction.errors || []
             );
         }
 
@@ -39,9 +42,7 @@ export class Validator<T> {
     }
 
     private generateValidateFunction(): ValidateFunction {
-        const ajv = new Ajv();
-
-        return ajv.compile(this.schema);
+        return this.ajv.compile(this.schema);
     }
 }
 
