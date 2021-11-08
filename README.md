@@ -1,3 +1,8 @@
+## install
+```bash 
+yarn add typescript-runtime-validator
+```
+
 ## purpose 
 this validator simply wraps `ajv` and `typescript-json-schema` in order to allow for relatively simple and fast runtime validation (initial schema building is fairly slow, but subsequent validations using the same schema should be fast)
 
@@ -44,6 +49,28 @@ finally {
         `must have required property 'numberProp'`
     );
 }
+
+```
+
+### with `node-config`
+
+```typescript
+import config from "config";
+import { resolve } from "path";
+
+const validator = new Validator<ISimpleInterface>({
+    fullTypeName: "ISimpleInterface",
+    basePath: resolve("./samples"), // base path of your app (needed if your type contains references to types in other files)
+    absoluteFilePaths: [
+        // file that contains your interface / type
+        resolve(__dirname + "/samples/simple.ts")
+    ]
+});
+
+// typedConfig will be of ISimpleInterface (presuming it validates)
+const typedConfig = validator.validate(config);
+
+console.log(typedConfig.stringProp); // gives a string
 
 ```
 

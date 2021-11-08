@@ -18,6 +18,7 @@ export class Validator<T> {
             params.absoluteFilePaths,
             params.compilerOptions || {
                 strictNullChecks: true,
+                allowSyntheticDefaultImports: true,
             },
             params.tjsSettings || {
                 required: true,
