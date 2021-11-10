@@ -1,3 +1,6 @@
+## what
+validate typescript at runtime using preexisting `.ts` type definitions (no need to create schemas ahead of time!) 
+
 ## install
 ```bash 
 yarn add typescript-runtime-validator
