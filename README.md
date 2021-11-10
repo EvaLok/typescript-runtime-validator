@@ -1,6 +1,30 @@
 ## what
 validate typescript at runtime using preexisting `.ts` type definitions (no need to create schemas ahead of time!) 
 
+## quickstart
+```typescript
+import { resolve } from "path";
+
+// set your type as generic
+const validator = new Validator<YourType>({
+    // full name of type as string
+    fullTypeName: "YourType",
+    // base path of your app (needed if your type contains references to types in other files)
+    // you could also put all paths in `absoluteFilePaths` but that's usually tedious
+    basePath: resolve("./base_path_of_project"), 
+    absoluteFilePaths: [
+        // file that contains your interface / type
+        resolve(__dirname + "/path/to/your/type.ts")
+    ]
+});
+
+// typed object from json data or whatever
+const typedConfig = validator.validate({
+    some: "properties",
+    would: "be here",
+});
+```
+
 ## install
 ```bash 
 yarn add typescript-runtime-validator
