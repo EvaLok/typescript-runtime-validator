@@ -1,3 +1,6 @@
+## deprecated - use `typia` instead
+thanks to @samchon we now have `typia`, which you should use instead of this library, as it's more efficient and ergonomic: https://github.com/samchon/typia
+
 ## what
 validate typescript at runtime using preexisting `.ts` type definitions (no need to create schemas ahead of time!) 
 
